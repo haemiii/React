@@ -4,86 +4,45 @@
   <body>
     <div id="root"></div>
   </body>
-  <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
   <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://unpkg.com/prop-types@15.7.2/prop-types.js"></script>
   <script type="text/babel">
     const root = document.getElementById("root");
-    const MinutesToHours = () => {
-      // let [counter, modifier] = React.useState(0);
-      // const onClick = () => {
-      //   // modifier(counter + 1);
-      //   modifier((current) => current + 1);
-      // };
-      const [amount, setAmount] = React.useState(0); //State는 기본적으로 데이터를 저장
-      const [flipped, setFlipped] = React.useState(false);
-      const onChange = (event) => {
-        const {
-          target: { value },
-        } = event;
-        setAmount(value);
-      };
-      const reset = () => setAmount(0);
-      const onFlip = () => {
-        reset();
-        setFlipped((current) => !current);
-      };
-
+    const Btn = ({ text, onClick, fontSize = 16 }) => {
       return (
-        <div>
-          <h1>Super Converter</h1>
-          <div>
-            <label htmlFor="minutes">Minutes</label>
-            <input
-              value={flipped ? amount * 60 : amount}
-              id="minutes"
-              placeholder="Minutes"
-              type="number"
-              onChange={onChange}
-              disabled={flipped}
-            />
-          </div>
-
-          <div>
-            <label htmlFor="hours">Hours</label>
-            <input
-              value={flipped ? amount : Math.round(amount / 60)}
-              id="hours"
-              placeholder="Hours"
-              type="number"
-              disabled={!flipped}
-              onChange={onChange}
-            />
-          </div>
-          <button onClick={reset}>Reset</button>
-          <button onClick={onFlip}>Flipped</button>
-        </div>
+        <button
+          onClick={onClick}
+          style={{
+            backgroundColor: "tomato",
+            color: "white",
+            padding: "10px 20px",
+            border: 0,
+            borderRadius: 10,
+            fontSize,
+          }}
+        >
+          {text}
+        </button>
       );
     };
-    const KmToMiles = () => {
-      //Fill the codes into this function
-      return <h3>Km 2 M </h3>;
+    Btn.propType = {
+      text: PropTypes.string.isRequired,
+      fontSize: PropTypes.number,
     };
+    {
+      /*const MemorizedBtn = React.memo(Btn)*/
+    }
     const App = () => {
-      const [index, setIndex] = React.useState(xx);
-      const onSelect = (event) => {
-        const {
-          target: { value },
-        } = event;
-        setIndex(value);
-      };
+      const [value, setValue] = React.useState("Save Changes");
+      const changeValue = () => setValue("Revert Changes");
+
       return (
         <div>
-          <h1>Super Converter</h1>
-          <select value={index} onChange={onSelect}>
-            <option value="xx">Select your units</option>
-            <option value="0">Minutes & Hours</option>
-            <option value="1">Km & Miles</option>
-          </select>
-          hr
-          {index === "xx" ? "Please select your units" : null}
-          {index === "0" ? <MinutesToHours /> : null}
-          {index === "1" ? <KmToMiles /> : null}
+          <Btn text={value} fontSize={18} onClick={changeValue} />
+          {/*여기서 onClick(changeValue)는 이벤트 리스너가 아니고 단지 특성(prop)일뿐!!*/}
+          <Btn text={"Continue"} />
         </div>
       );
     };
