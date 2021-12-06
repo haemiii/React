@@ -9,7 +9,7 @@
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script type="text/babel">
     const root = document.getElementById("root");
-    const App = () => {
+    const MinutesToHours = () => {
       // let [counter, modifier] = React.useState(0);
       // const onClick = () => {
       //   // modifier(counter + 1);
@@ -57,6 +57,33 @@
           </div>
           <button onClick={reset}>Reset</button>
           <button onClick={onFlip}>Flipped</button>
+        </div>
+      );
+    };
+    const KmToMiles = () => {
+      //Fill the codes into this function
+      return <h3>Km 2 M </h3>;
+    };
+    const App = () => {
+      const [index, setIndex] = React.useState(xx);
+      const onSelect = (event) => {
+        const {
+          target: { value },
+        } = event;
+        setIndex(value);
+      };
+      return (
+        <div>
+          <h1>Super Converter</h1>
+          <select value={index} onChange={onSelect}>
+            <option value="xx">Select your units</option>
+            <option value="0">Minutes & Hours</option>
+            <option value="1">Km & Miles</option>
+          </select>
+          hr
+          {index === "xx" ? "Please select your units" : null}
+          {index === "0" ? <MinutesToHours /> : null}
+          {index === "1" ? <KmToMiles /> : null}
         </div>
       );
     };
